@@ -1,0 +1,227 @@
+/* Unair pallete
+biru: #14497f
+kunig: #ffcb05 */
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  padding: 0;
+  background-color: white;
+}
+
+/* Header */
+header {
+  background-color: #14497f; /* biru */
+  color: white;
+  margin: -10px;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+}
+
+.logo-title {
+  display: flex;
+  align-content: center;
+}
+
+.logo-title img {
+  height: 60px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.nav-btn {
+    background-color: rgba(255,203,5,0.7); /* kuning semi transparan */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255,203,5,1); /* kuning solid */
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 px;
+}
+nav .nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+nav .nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav .nav-links a:hover {
+    text-decoration: underline;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.text {
+  text-align: justify;
+  alint-items: center;
+  padding-top: 90px;
+}
+/* Intro (kiri teks, kanan video) */
+.intro {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.intro .text {
+  width: 50%;
+}
+
+.intro .video {
+  width: 45%;
+}
+
+/* Berita */
+.judul-berita {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.berita-link {
+  text-decoration: none;
+  color: black;
+}
+
+.berita {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.berita article {
+  width: 30%;
+  text-align: center;
+}
+
+.berita img {
+  width: 100%;
+  height: auto;
+}
+
+/* Map & Video bawah */
+.map-video {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: #ddd;
+  text-align: center;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+/* login */
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+/* ================= Global Form & Table Styling ================= */
+
+/* Form umum */
+form {
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  max-width: 500px;
+  margin: 20px auto;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #14497f;
+  outline: none;
+}
+
+/* Tombol umum */
+button, input[type="submit"] {
+  background: #ffcb05;
+  color: #14497f;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover, input[type="submit"]:hover {
+  background: #e0b600;
+}
+
+/* Tabel umum */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: #fff;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background: #14497f;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tr:hover {
+  background: #f1f7ff;
+}
+
+/* Link umum */
+a {
+  color: #14497f;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
