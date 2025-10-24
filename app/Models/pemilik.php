@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class pemilik extends Model
+class Pemilik extends Model
 {
     protected $table = 'pemilik';
     protected $primaryKey = 'id_pemilik';
@@ -14,4 +14,6 @@ class pemilik extends Model
     {
         return $this->belongsTo(User::class, 'iduser', 'iduser');
     }
+
+    
 }

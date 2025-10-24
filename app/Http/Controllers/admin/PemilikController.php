@@ -5,13 +5,13 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\pemilik;
+use App\Models\Pemilik;
 
 class PemilikController extends Controller
 {
     public function index()
     {
-        $pemilik = pemilik::with('user')->get();
+        $pemilik = Pemilik::with('user')->get();
         return view('admin.Pemilik.index', compact('pemilik'));
     }
 }

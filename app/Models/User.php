@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $table = 'users';
+    protected $table = 'user';
     protected $primaryKey = 'iduser';
     protected $fillable = [
         'nama',
@@ -48,8 +48,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function pemilik()
+    public function Pemilik()
     {
         return $this->hasOne(pemilik::class, 'iduser', 'iduser');
+    }
+
+    public function roles()
+    {
+    return $this->belongsToMany(Role::class, 'nama_role', 'iduser', 'idrole');
+    }
+
+    public function roleUsers()
+    {
+        return $this->hasMany(RoleUser::class, 'iduser', 'iduser');
     }
 }
