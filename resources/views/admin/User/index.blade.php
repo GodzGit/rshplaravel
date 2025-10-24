@@ -17,7 +17,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Email</th>
+                <th>Emaila</th>
             </tr>
         </thead>
         <tbody>
