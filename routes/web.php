@@ -70,9 +70,15 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/ras/create', [RasController::class, 'create'])->name('admin.RasHewan.create');
     Route::post('/admin/ras/store', [RasController::class, 'store'])->name('admin.RasHewan.store');
     Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
+    Route::get('/admin/kategori/create', [KategoriController::class, 'create'])->name('admin.kategori.create');
+    Route::post('/admin/kategori/store', [KategoriController::class, 'store'])->name('admin.kategori.store');
     Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.KategoriKlinis.index');
+    Route::get('/admin/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('admin.KategoriKlinis.create');
+    Route::post('/admin/kategori-klinis/store', [KategoriKlinisController::class, 'store'])->name('admin.KategoriKlinis.store');
     Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.KodeTindakan.index');
     Route::get('/admin/pet', [PetController::class, 'index'])->name('admin.Pet.index');
+    Route::get('/admin/pet/create', [PetController::class, 'create'])->name('admin.Pet.create');
+    Route::post('/admin/pet/store', [PetController::class, 'store'])->name('admin.Pet.store');
     Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.Role.index');
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.User.index');
 });

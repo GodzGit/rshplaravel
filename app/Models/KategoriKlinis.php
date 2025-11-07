@@ -9,6 +9,9 @@ class KategoriKlinis extends Model
     protected $table = 'kategori_klinis';
     protected $primaryKey = 'idkategori_klinis';
     public $timestamps = false;
+    protected $fillable = [
+        'nama_kategori_klinis',
+    ];
 
     public function kodeTindakan()
     {
