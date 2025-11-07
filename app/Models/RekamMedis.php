@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class RekamMedis extends Model
 {
+    protected $table = 'rekam_medis';
+    protected $primaryKey = 'idrekam_medis';
+    public $timestamps = false;
+
     public function temuDokter()
     {
         return $this->belongsTo(TemuDokter::class, 'idreservasi_dokter', 'idreservasi_dokter');

@@ -1,29 +1,29 @@
 <?php
 
-namespace App\Http\Controllers\dokter;
+namespace App\Http\Controllers\perawat;
 
 use App\Http\Controllers\Controller;
 use App\Models\RekamMedis;
 use Illuminate\Http\Request;
 
-class RekamMedisDokterController extends Controller
+class RekamMedisPerawatController extends Controller
 {
     public function index()
     {
         $rekam = RekamMedis::with([
-            'temuDokter.pet.pemilik.user',
+            'temuDokter.pet.pemilik.user'
         ])->get();
 
-        return view('dokter.RekamMedis.index', compact('rekam'));
+        return view('perawat.RekamMedis.index', compact('rekam'));
     }
 
     public function show($id)
     {
         $rm = RekamMedis::with([
             'temuDokter.pet.pemilik.user',
-            'detailRekamMedis.kodeTindakan',
+            'detailRekamMedis.kodeTindakan'
         ])->findOrFail($id);
 
-        return view('dokter.RekamMedis.show', compact('rm'));
+        return view('perawat.RekamMedis.show', compact('rm'));
     }
 }

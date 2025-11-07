@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="container">
-    <h3>Daftar Rekam Medis Pasien</h3>
+    <h3>Daftar Rekam Medis</h3>
 
     <table class="table">
         <tr>
@@ -25,18 +25,18 @@
 
         @foreach ($rekam as $no => $r)
         <tr>
-            <td>{{ $no+1 }}</td>
+            <td>{{ $no + 1 }}</td>
             <td>{{ $r->temuDokter->pet->nama }}</td>
             <td>{{ $r->temuDokter->pet->pemilik->user->nama }}</td>
             <td>{{ $r->diagnosa }}</td>
             <td>{{ $r->created_at }}</td>
             <td>
-                <a href="{{ route('dokter.RekamMedis.show', $r->idrekam_medis) }}">Detail</a>
+                <a href="{{ route('perawat.RekamMedis.show', $r->idrekam_medis) }}">Detail</a>
             </td>
         </tr>
         @endforeach
     </table>
-    <button class="btn"><a href="{{ route('dokter.dashboard') }}">Kembali</a></button>
+    <button class="btn"><a href="{{ route('perawat.dashboard') }}">Kembali</a></button>
 </div>
 @endsection
 

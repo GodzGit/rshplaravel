@@ -7,7 +7,9 @@ use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\dokter\{DashboardDokterController,
     RekamMedisDokterController
     };
-use App\Http\Controllers\perawat\DashboardPerawatController;
+use App\Http\Controllers\perawat\{DashboardPerawatController,
+    RekamMedisPerawatController
+    };
 use App\Http\Controllers\pemilik\DashboardPemilikController;
 use App\Http\Controllers\resepsionis\{DashboardResepsionisController,
     ResepsionisPendaftaranController,
@@ -62,6 +64,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index']) ->name('admin.dashboard');
     Route::get('/admin/jenishewan', [JenisHewanController::class, 'index'])->name('admin.JenisHewan.index');
+    Route::get('/admin/jenishewan/create', [JenisHewanController::class, 'create'])->name('admin.JenisHewan.create');
+    Route::post('/admin/jenishewan/store', [JenisHewanController::class, 'store'])->name('admin.JenisHewan.store');
     Route::get('/admin/ras', [RasController::class, 'index'])->name('admin.RasHewan.index');
     Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
     Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.KategoriKlinis.index');
@@ -101,7 +105,14 @@ Route::middleware(['isDokter'])->group(function () {
 });
 
 Route::middleware(['isPerawat'])->group(function () {
-    Route::get('/perawat/dashboard', [DashboardPerawatController::class, 'index']) ->name('perawat.dashboard');
+    Route::get('/perawat/dashboard', [App\Http\Controllers\perawat\DashboardPerawatController::class, 'index'])
+        ->name('perawat.dashboard');
+
+    Route::get('/perawat/rekam-medis', [App\Http\Controllers\perawat\RekamMedisPerawatController::class, 'index'])
+        ->name('perawat.RekamMedis.index');
+
+    Route::get('/perawat/rekam-medis/{id}', [App\Http\Controllers\perawat\RekamMedisPerawatController::class, 'show'])
+        ->name('perawat.RekamMedis.show');
 });
 
 Route::middleware(['isPemilik'])->group(function () {
