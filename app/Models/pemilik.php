@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Pemilik extends Model
 {
     protected $table = 'pemilik';
-    protected $primaryKey = 'id_pemilik';
+    protected $primaryKey = 'idpemilik';
     public $fillable = ['no_wa', 'alamat'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'iduser', 'iduser');
+    }
+
+    public function pet()
+    {
+        return $this->hasMany(Pet::class, 'idpemilik', 'idpemilik');
     }
 
     

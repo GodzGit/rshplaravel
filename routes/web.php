@@ -4,13 +4,18 @@ use App\Http\Controllers\site\SiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardAdminController;
-use App\Http\Controllers\dokter\DashboardDokterController;
+use App\Http\Controllers\dokter\{DashboardDokterController,
+    RekamMedisDokterController
+    };
 use App\Http\Controllers\perawat\DashboardPerawatController;
 use App\Http\Controllers\pemilik\DashboardPemilikController;
-use App\Http\Controllers\resepsionis\DashboardResepsionisController;
+use App\Http\Controllers\resepsionis\{DashboardResepsionisController,
+    ResepsionisPendaftaranController,
+    ResepsionisTemuDokterController
+    };
 use App\Http\Controllers\Admin\{
     JenisHewanController,
-    RasHewanController,
+    RasController,
     KategoriController,
     KategoriKlinisController,
     KodeTindakanController,
@@ -56,14 +61,43 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/dashboard', [DashboardAdminController::class, 'index']) ->name('admin.dashboard');
+    Route::get('/admin/jenishewan', [JenisHewanController::class, 'index'])->name('admin.JenisHewan.index');
+    Route::get('/admin/ras', [RasController::class, 'index'])->name('admin.RasHewan.index');
+    Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
+    Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.KategoriKlinis.index');
+    Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.KodeTindakan.index');
+    Route::get('/admin/pet', [PetController::class, 'index'])->name('admin.Pet.index');
+    Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.Role.index');
+    Route::get('/admin/user', [UserController::class, 'index'])->name('admin.User.index');
 });
 
 Route::middleware(['isResepsionis'])->group(function () {
-    Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index']) ->name('resepsionis.dashboard');
+    Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index'])
+        ->name('resepsionis.dashboard');
+
+    Route::get('/resepsionis/Pendaftaran', [ResepsionisPendaftaranController::class, 'index'])
+        ->name('resepsionis.Pendaftaran.index');
+
+    Route::get('/resepsionis/temu-dokter', [ResepsionisTemuDokterController::class, 'index'])
+        ->name('resepsionis.TemuDokter.index');
+
+    Route::get('/resepsionis/temu-dokter/tambah', [ResepsionisTemuDokterController::class, 'create'])
+        ->name('resepsionis.TemuDokter.tambah');
+
+    Route::post('/resepsionis/temu-dokter/store', [ResepsionisTemuDokterController::class, 'store'])
+        ->name('resepsionis.TemuDokter.store');
 });
 
+
 Route::middleware(['isDokter'])->group(function () {
-    Route::get('/dokter/dashboard', [DashboardDokterController::class, 'index']) ->name('dokter.dashboard');
+    Route::get('/dokter/dashboard', [App\Http\Controllers\dokter\DashboardDokterController::class, 'index'])
+        ->name('dokter.dashboard');
+
+    Route::get('/dokter/rekam-medis', [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'index'])
+        ->name('dokter.RekamMedis.index');
+
+    Route::get('/dokter/rekam-medis/{id}', [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'show'])
+        ->name('dokter.RekamMedis.show');
 });
 
 Route::middleware(['isPerawat'])->group(function () {
