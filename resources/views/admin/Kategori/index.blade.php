@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
 </head>
 <body>
-    @extends('layouts.admin')
+    @extends('layouts.app')
 
 @section('content')
 <div class="container">
@@ -17,6 +17,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama Kategori</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +25,7 @@
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->nama_kategori }}</td>
+                <td>null</td>
             </tr>
             @endforeach
         </tbody>

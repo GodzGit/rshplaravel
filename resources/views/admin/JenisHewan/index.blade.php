@@ -43,7 +43,9 @@
     </tbody>
 </table>
 <div class="mb-3">
-    <form action="{{ route('admin.JenisHewan.create') }}" method="GET" class="d-inline">
+    
+<button class="btn"><a href="{{ route('admin.dashboard') }}">Kembali</a></button>
+    <form action="{{ route('admin.JenisHewan.create') }}" method="GET" class="d-inline justify-content-end">
         <button type="submit" class="btn btn-primary">
             <i class="fas fa-plus"></i> Tambah Jenis Hewan
         </button>

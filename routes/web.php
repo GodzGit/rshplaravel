@@ -67,6 +67,8 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/jenishewan/create', [JenisHewanController::class, 'create'])->name('admin.JenisHewan.create');
     Route::post('/admin/jenishewan/store', [JenisHewanController::class, 'store'])->name('admin.JenisHewan.store');
     Route::get('/admin/ras', [RasController::class, 'index'])->name('admin.RasHewan.index');
+    Route::get('/admin/ras/create', [RasController::class, 'create'])->name('admin.RasHewan.create');
+    Route::post('/admin/ras/store', [RasController::class, 'store'])->name('admin.RasHewan.store');
     Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
     Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.KategoriKlinis.index');
     Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.KodeTindakan.index');
