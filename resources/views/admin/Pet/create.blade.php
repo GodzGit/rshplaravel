@@ -58,7 +58,7 @@
             </select>
         </div>
 
-        <button class="btn btn-primary">Simpan Pet</button>
+        <button class="btn btn-primary">Simpan</button>
     </form>
 
 </div>
