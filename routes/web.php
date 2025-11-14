@@ -76,11 +76,17 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('admin.KategoriKlinis.create');
     Route::post('/admin/kategori-klinis/store', [KategoriKlinisController::class, 'store'])->name('admin.KategoriKlinis.store');
     Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.KodeTindakan.index');
+    Route::get('/admin/kode-tindakan/create', [KodeTindakanController::class, 'create'])->name('admin.KodeTindakan.create');
+    Route::post('/admin/kode-tindakan/store', [KodeTindakanController::class, 'store'])->name('admin.KodeTindakan.store');
     Route::get('/admin/pet', [PetController::class, 'index'])->name('admin.Pet.index');
     Route::get('/admin/pet/create', [PetController::class, 'create'])->name('admin.Pet.create');
     Route::post('/admin/pet/store', [PetController::class, 'store'])->name('admin.Pet.store');
     Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.Role.index');
+    Route::get('/admin/role/create', [RoleController::class, 'create'])->name('admin.Role.create');
+    Route::post('/admin/role/store', [RoleController::class, 'store'])->name('admin.Role.store');
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.User.index');
+    Route::get('/admin/user/create', [UserController::class, 'create'])->name('admin.User.create');
+    Route::post('/admin/user/store', [UserController::class, 'store'])->name('admin.User.store');
 });
 
 Route::middleware(['isResepsionis'])->group(function () {

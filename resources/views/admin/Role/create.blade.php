@@ -1,0 +1,45 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Tambah Role</h5>
+        </div>
+        <div class="card-body">
+          @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+          @endif
+
+          <form action="{{ route('admin.Role.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label for="nama_role" class="form-label">Nama Role <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                id="nama_role"
+                name="nama_role"
+                class="form-control @error('nama_role') is-invalid @enderror"
+                value="{{ old('nama_role') }}"
+                placeholder="misal: Administrator / Dokter / Perawat / Resepsionis / Pemilik"
+                required
+              >
+              @error('nama_role')
+                <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="{{ route('admin.Role.index') }}" class="btn btn-secondary">Kembali</a>
+              <button type="submit" class="btn btn-primary">Simpan</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection

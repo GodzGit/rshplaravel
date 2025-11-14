@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $table = 'user';
     protected $primaryKey = 'iduser';
+    public $timestamps = false;
     protected $fillable = [
         'nama',
         'email',
@@ -55,11 +56,20 @@ class User extends Authenticatable
 
     public function roles()
     {
-    return $this->belongsToMany(Role::class, 'nama_role', 'iduser', 'idrole');
+        return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole');
+    }
+
+    public function activeRole()
+    {
+        return $this->hasOne(RoleUser::class, 'iduser', 'iduser')
+                    ->where('status', 1)
+                    ->with('role');
     }
 
     public function roleUsers()
     {
         return $this->hasMany(RoleUser::class, 'iduser', 'iduser');
     }
+
+    
 }
