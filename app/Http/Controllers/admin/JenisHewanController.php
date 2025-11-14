@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\JenisHewan;
+use Illuminate\Support\Facades\DB;
 
 class JenisHewanController extends Controller
 {
     public function index()
     {
-        $jenisHewan = JenisHewan::all();
+        // eloquent
+        // $jenisHewan = JenisHewan::all();
+        // return view('admin.JenisHewan.index', compact('jenisHewan'));
+        $jenisHewan = DB::table('jenis_hewan')  ->select('idjenis_hewan', 'nama_jenis_hewan')->get();
         return view('admin.JenisHewan.index', compact('jenisHewan'));
     }
     public function create()
@@ -47,7 +51,10 @@ class JenisHewanController extends Controller
     protected function createJenisHewan(array $data)
     {
         try {
-            return JenisHewan::create([
+            // return JenisHewan::create([
+            //     'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),
+            // ]);
+            return DB::table('jenis_hewan')->insert([
                 'nama_jenis_hewan' => $this->formatNamaJenisHewan($data['nama_jenis_hewan']),
             ]);
         } catch (\Exception $e) {
