@@ -66,6 +66,9 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/jenishewan', [JenisHewanController::class, 'index'])->name('admin.JenisHewan.index');
     Route::get('/admin/jenishewan/create', [JenisHewanController::class, 'create'])->name('admin.JenisHewan.create');
     Route::post('/admin/jenishewan/store', [JenisHewanController::class, 'store'])->name('admin.JenisHewan.store');
+    Route::get('/admin/jenishewan/{id}/edit', [JenisHewanController::class, 'edit'])->name('admin.JenisHewan.edit');
+    Route::put('/admin/jenishewan/{id}', [JenisHewanController::class, 'update'])->name('admin.JenisHewan.update');
+    Route::delete('/admin/jenishewan/{id}', [JenisHewanController::class, 'destroy'])->name('admin.JenisHewan.destroy');
     Route::get('/admin/ras', [RasController::class, 'index'])->name('admin.RasHewan.index');
     Route::get('/admin/ras/create', [RasController::class, 'create'])->name('admin.RasHewan.create');
     Route::post('/admin/ras/store', [RasController::class, 'store'])->name('admin.RasHewan.store');

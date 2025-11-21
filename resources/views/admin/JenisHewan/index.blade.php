@@ -46,17 +46,16 @@
                                     <td>{{ $index + 1 }}.</td>
                                     <td>{{ $hewan->nama_jenis_hewan }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-warning btn-sm me-1">
+                                        <a href="{{ route('admin.JenisHewan.edit', $hewan->idjenis_hewan) }}" class="btn btn-warning btn-sm me-1">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
 
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="if(confirm('Yakin ingin menghapus data ini?')) {document.getElementById('delete-form-{{ $hewan->idjenis_hewan }}').submit();}">
-                                            <i class="bi bi-trash"></i> Delete
-                                        </button>
-
-                                        <form id="delete-form-{{ $hewan->idjenis_hewan }}" action="#" method="POST" style="display: none;">
+                                        <form action="{{ route('admin.JenisHewan.destroy', $hewan->idjenis_hewan) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('DELETE')
+                                            <button class="btn btn-sm btn-danger" onclick="return confirm('Hapus data ini?')">
+                                                Hapus
+                                            </button>
                                         </form>
                                     </td>
                                 </tr>

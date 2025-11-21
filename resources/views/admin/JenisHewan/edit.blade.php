@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Tambah Jenis Hewan</h3>
+                <h3 class="mb-0">Edit Jenis Hewan</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="#">Master Data</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('admin.JenisHewan.index') }}">Jenis Hewan</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Tambah</li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit</li>
                 </ol>
             </div>
         </div>
@@ -21,52 +21,47 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-primary card-outline mb-4">
+                <div class="card card-warning card-outline mb-4">
                     <div class="card-header">
-                        <div class="card-title">Form Tambah Data</div>
+                        <div class="card-title">Form Edit Data</div>
                     </div>
 
-                    <form action="{{ route('admin.JenisHewan.store') }}" method="POST">
+                    <form action="{{ route('admin.JenisHewan.update', $jenis->idjenis_hewan) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        
                         <div class="card-body">
-                            
                             {{-- Error Alert Global --}}
-                            @if (session('error'))
+                            @if ($errors->any())
                                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    {{ session('error') }}
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
 
                             <div class="mb-3">
-                                <label for="nama_jenis_hewan" class="form-label">
-                                    Nama Jenis Hewan <span class="text-danger">*</span>
-                                </label>
+                                <label for="nama_jenis_hewan" class="form-label">Nama Jenis Hewan</label>
                                 <input 
                                     type="text" 
-                                    id="nama_jenis_hewan" 
                                     name="nama_jenis_hewan" 
-                                    class="form-control @error('nama_jenis_hewan') is-invalid @enderror"
-                                    value="{{ old('nama_jenis_hewan') }}" 
-                                    placeholder="Masukkan nama jenis hewan"
+                                    class="form-control"
+                                    value="{{ old('nama_jenis_hewan', $jenis->nama_jenis_hewan) }}" 
                                     required
                                 >
-                                {{-- Error Feedback per Input --}}
-                                @error('nama_jenis_hewan')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route('admin.JenisHewan.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </div>

@@ -67,4 +67,31 @@ class JenisHewanController extends Controller
     {
         return trim(ucwords(strtolower($nama)));
     }
+
+    public function edit($id)
+    {
+        $jenis = JenisHewan::findOrFail($id);
+        return view('admin.JenisHewan.edit', compact('jenis'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'nama_jenis_hewan' => 'required|string|max:255|unique:jenis_hewan,nama_jenis_hewan,' . $id . ',idjenis_hewan',
+        ]);
+
+        $jenis = JenisHewan::findOrFail($id);
+        $jenis->nama_jenis_hewan = ucwords(strtolower($request->nama_jenis_hewan));
+        $jenis->save();
+
+        return redirect()->route('admin.JenisHewan.index')->with('success', 'Data berhasil diupdate');
+    }
+
+    public function destroy($id)
+    {
+        $jenis = JenisHewan::findOrFail($id);
+        $jenis->delete();
+
+        return redirect()->route('admin.JenisHewan.index')->with('success', 'Data berhasil dihapus');
+    }
 }
