@@ -1,58 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kode Tindakan</title>
-    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
-</head>
-<body>
-    @extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="container">
-    <h2>Daftar Kode Tindakan Terapi</h2>
-    <button class="btn"><a href="{{ route('admin.dashboard') }}">Kembali</a></button>
-    <form action="{{ route('admin.KodeTindakan.create') }}" method="GET" class="d-inline justify-content-end">
-        <button type="submit" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Tambah Kode Tindakan Terapi  
-        </button>
-    </form>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Kode</th>
-                <th>Deskripsi</th>
-                <th>Kategori</th>
-                <th>Kategori Klinis</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($kodeTindakan as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->kode }}</td>
-                <td>{{ $item->deskripsi_tindakan_terapi }}</td>
-                <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
-                <td>{{ $item->kategoriKlinis->nama_kategori_klinis ?? '-' }}</td>
-                <td class="justify-content-end">
-                    <a href="#" class="btn btn-sm btn-warning">
-                        Edit
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Kode Tindakan</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Kode Tindakan</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Daftar Kode Tindakan Terapi</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('admin.KodeTindakan.create') }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-lg"></i> Tambah Data
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">No</th>
+                                    <th>Kode</th>
+                                    <th>Deskripsi</th>
+                                    <th>Kategori</th>
+                                    <th>Kategori Klinis</th>
+                                    <th style="width: 200px">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($kodeTindakan as $item)
+                                <tr class="align-middle">
+                                    <td>{{ $loop->iteration }}.</td>
+                                    <td><span class="badge text-bg-primary">{{ $item->kode }}</span></td>
+                                    <td>{{ $item->deskripsi_tindakan_terapi }}</td>
+                                    <td>{{ $item->nama_kategori ?? '-' }}</td>
+                                    <td>{{ $item->nama_kategori_klinis ?? '-' }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.KodeTindakan.edit', $item->idkode_tindakan_terapi) }}" class="btn btn-warning btn-sm me-1">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </a>
+
+                                        <form action="{{ route('admin.KodeTindakan.destroy', $item->idkode_tindakan_terapi) }}" method="POST" class="d-inline" onsubmit="return confirm('Hapus data ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm">
+                                                <i class="bi bi-trash"></i> Hapus
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    </div>
+
+                <div class="mb-3">
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
                     </a>
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">
-                            Hapus
-                        </button>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
-
-</body>
-</html>

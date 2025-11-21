@@ -31,6 +31,48 @@
                                 <p>Jenis Hewan</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.RasHewan.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Ras Hewan</p>
+                            </a>
+                        </li>
+                          <li class="nav-item">
+                              <a href="{{ route('admin.Pet.index') }}" class="nav-link">
+                                  <i class="nav-icon bi bi-circle"></i>
+                                  <p>Pet</p>
+                              </a>  
+                          </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.User.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.Role.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Role</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.kategori.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Kategori</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.KategoriKlinis.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Kategori Klinis</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.KodeTindakan.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-circle"></i>
+                                <p>Kode Tindakan</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

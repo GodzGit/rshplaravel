@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Tambah Pet</h3>
+                <h3 class="mb-0">Edit Data Pet</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('admin.Pet.index') }}">Pet</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
         </div>
@@ -21,85 +21,89 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-primary card-outline mb-4">
+                <div class="card card-warning card-outline mb-4">
                     <div class="card-header">
-                        <h3 class="card-title">Form Tambah Pet</h3>
+                        <h5 class="card-title">Form Edit Pet</h5>
                     </div>
 
-                    <form action="{{ route('admin.Pet.store') }}" method="POST">
+                    <form action="{{ route('admin.Pet.update', $pet->idpet) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        
                         <div class="card-body">
-                            
-                            @if(session('error'))
+                            @if($errors->any())
                                 <div class="alert alert-danger alert-dismissible fade show">
-                                    {{ session('error') }}
+                                    {{ $errors->first() }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                 </div>
                             @endif
 
-                            {{-- Nama Pet --}}
+                            {{-- Nama Pet (Konsisten dengan Create: nama) --}}
                             <div class="mb-3">
-                                <label class="form-label">Nama Pet <span class="text-danger">*</span></label>
-                                <input type="text" name="nama" class="form-control" required placeholder="Masukkan nama hewan">
+                                <label class="form-label">Nama Pet</label>
+                                <input type="text" name="nama" class="form-control"
+                                       value="{{ old('nama', $pet->nama) }}" required>
                             </div>
 
                             {{-- Tanggal Lahir --}}
                             <div class="mb-3">
-                                <label class="form-label">Tanggal Lahir <span class="text-danger">*</span></label>
-                                <input type="date" name="tanggal_lahir" class="form-control" required>
+                                <label class="form-label">Tanggal Lahir</label>
+                                <input type="date" name="tanggal_lahir" class="form-control"
+                                       value="{{ old('tanggal_lahir', $pet->tanggal_lahir) }}" required>
                             </div>
 
                             {{-- Warna --}}
                             <div class="mb-3">
                                 <label class="form-label">Warna / Tanda</label>
-                                <input type="text" name="warna_tanda" class="form-control" placeholder="Contoh: Putih Belang Hitam">
+                                <input type="text" name="warna_tanda" class="form-control"
+                                       value="{{ old('warna_tanda', $pet->warna_tanda) }}">
                             </div>
 
                             {{-- Jenis Kelamin --}}
                             <div class="mb-3">
-                                <label class="form-label">Jenis Kelamin <span class="text-danger">*</span></label>
+                                <label class="form-label">Jenis Kelamin</label>
                                 <select name="jenis_kelamin" class="form-control" required>
-                                    <option value="">-- Pilih --</option>
-                                    <option value="L">Laki-laki (Jantan)</option>
-                                    <option value="P">Perempuan (Betina)</option>
+                                    <option value="L" {{ $pet->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-laki (Jantan)</option>
+                                    <option value="P" {{ $pet->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan (Betina)</option>
                                 </select>
                             </div>
 
                             {{-- Pemilik --}}
                             <div class="mb-3">
-                                <label class="form-label">Pemilik <span class="text-danger">*</span></label>
+                                <label class="form-label">Pemilik</label>
                                 <select name="idpemilik" class="form-control" required>
                                     <option value="">-- Pilih Pemilik --</option>
                                     @foreach($pemilik as $p)
-                                        <option value="{{ $p->idpemilik }}">
-                                            {{ $p->nama }} (WA: {{ $p->no_wa }})
+                                        <option value="{{ $p->idpemilik }}"
+                                            {{ $pet->idpemilik == $p->idpemilik ? 'selected' : '' }}>
+                                            {{ $p->nama }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            {{-- Ras Hewan --}}
+                            {{-- Ras Hewan (Memilih Ras otomatis menentukan Jenis Hewan) --}}
                             <div class="mb-3">
-                                <label class="form-label">Ras Hewan <span class="text-danger">*</span></label>
+                                <label class="form-label">Ras Hewan</label>
                                 <select name="idras_hewan" class="form-control" required>
-                                    <option value="">-- Pilih Ras --</option>
+                                    <option value="">-- pilih ras hewan --</option>
                                     @foreach($ras as $r)
-                                        <option value="{{ $r->idras_hewan }}">
+                                        <option value="{{ $r->idras_hewan }}"
+                                            {{ $pet->idras_hewan == $r->idras_hewan ? 'selected' : '' }}>
                                             {{ $r->nama_ras }} ({{ $r->nama_jenis_hewan }})
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route('admin.Pet.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </div>

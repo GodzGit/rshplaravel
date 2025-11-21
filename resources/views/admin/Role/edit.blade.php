@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Tambah Kategori Klinis</h3>
+                <h3 class="mb-0">Edit Role</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.KategoriKlinis.index') }}">Kategori Klinis</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.Role.index') }}">Role</a></li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
         </div>
@@ -21,32 +21,30 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-primary card-outline mb-4">
+                <div class="card card-warning card-outline mb-4">
                     <div class="card-header">
-                        <div class="card-title">Form Tambah Kategori Klinis</div>
+                        <h5 class="card-title">Form Edit Role</h5>
                     </div>
 
-                    <form action="{{ route('admin.KategoriKlinis.store') }}" method="POST">
+                    <form action="{{ route('admin.Role.update', $role->idrole) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        
                         <div class="card-body">
                             <div class="mb-3">
-                                <label class="form-label">Nama Kategori Klinis <span class="text-danger">*</span></label>
-                                <input type="text" 
-                                       name="nama_kategori_klinis" 
-                                       class="form-control" 
-                                       value="{{ old('nama_kategori_klinis') }}" 
-                                       required 
-                                       placeholder="Masukkan nama kategori klinis">
+                                <label class="form-label">Nama Role</label>
+                                <input type="text" name="nama_role" class="form-control"
+                                       value="{{ $role->nama_role }}" required>
                             </div>
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('admin.KategoriKlinis.index') }}" class="btn btn-secondary">
+                                <a href="{{ route('admin.Role.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </div>

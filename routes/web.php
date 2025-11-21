@@ -69,27 +69,55 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/jenishewan/{id}/edit', [JenisHewanController::class, 'edit'])->name('admin.JenisHewan.edit');
     Route::put('/admin/jenishewan/{id}', [JenisHewanController::class, 'update'])->name('admin.JenisHewan.update');
     Route::delete('/admin/jenishewan/{id}', [JenisHewanController::class, 'destroy'])->name('admin.JenisHewan.destroy');
+
     Route::get('/admin/ras', [RasController::class, 'index'])->name('admin.RasHewan.index');
     Route::get('/admin/ras/create', [RasController::class, 'create'])->name('admin.RasHewan.create');
     Route::post('/admin/ras/store', [RasController::class, 'store'])->name('admin.RasHewan.store');
+    Route::get('/admin/ras/edit/{id}', [RasController::class, 'edit'])->name('admin.RasHewan.edit');
+    Route::put('/admin/ras/update/{id}', [RasController::class, 'update'])->name('admin.RasHewan.update');
+    Route::delete('/admin/ras/destroy/{id}', [RasController::class, 'destroy'])->name('admin.RasHewan.destroy');
+
     Route::get('/admin/kategori', [KategoriController::class, 'index'])->name('admin.kategori.index');
     Route::get('/admin/kategori/create', [KategoriController::class, 'create'])->name('admin.kategori.create');
     Route::post('/admin/kategori/store', [KategoriController::class, 'store'])->name('admin.kategori.store');
+    Route::get('/admin/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('admin.kategori.edit');
+    Route::put('/admin/kategori/{id}/update', [KategoriController::class, 'update'])->name('admin.kategori.update');
+    Route::delete('/admin/kategori/{id}/destroy', [KategoriController::class, 'destroy'])->name('admin.kategori.destroy');
+
     Route::get('/admin/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('admin.KategoriKlinis.index');
     Route::get('/admin/kategori-klinis/create', [KategoriKlinisController::class, 'create'])->name('admin.KategoriKlinis.create');
     Route::post('/admin/kategori-klinis/store', [KategoriKlinisController::class, 'store'])->name('admin.KategoriKlinis.store');
+    Route::get('/admin/kategori-klinis/{id}/edit', [KategoriKlinisController::class, 'edit'])->name('admin.KategoriKlinis.edit');
+    Route::put('/admin/kategori-klinis/{id}/update', [KategoriKlinisController::class, 'update'])->name('admin.KategoriKlinis.update');
+    Route::delete('/admin/kategori-klinis/{id}/destroy', [KategoriKlinisController::class, 'destroy'])->name('admin.KategoriKlinis.destroy');
+
     Route::get('/admin/kode-tindakan', [KodeTindakanController::class, 'index'])->name('admin.KodeTindakan.index');
     Route::get('/admin/kode-tindakan/create', [KodeTindakanController::class, 'create'])->name('admin.KodeTindakan.create');
     Route::post('/admin/kode-tindakan/store', [KodeTindakanController::class, 'store'])->name('admin.KodeTindakan.store');
+    Route::get('/admin/kode-tindakan/{id}/edit', [KodeTindakanController::class, 'edit'])->name('admin.KodeTindakan.edit');
+    Route::put('/admin/kode-tindakan/{id}/update', [KodeTindakanController::class, 'update'])->name('admin.KodeTindakan.update');
+    Route::delete('/admin/kode-tindakan/{id}/destroy', [KodeTindakanController::class, 'destroy'])->name('admin.KodeTindakan.destroy');
+
     Route::get('/admin/pet', [PetController::class, 'index'])->name('admin.Pet.index');
     Route::get('/admin/pet/create', [PetController::class, 'create'])->name('admin.Pet.create');
     Route::post('/admin/pet/store', [PetController::class, 'store'])->name('admin.Pet.store');
+    Route::get('/admin/pet/{id}/edit', [PetController::class, 'edit'])->name('admin.Pet.edit');
+    Route::put('/admin/pet/{id}', [PetController::class, 'update'])->name('admin.Pet.update');
+    Route::delete('/admin/pet/{id}', [PetController::class, 'destroy'])->name('admin.Pet.destroy');
+
     Route::get('/admin/role', [RoleController::class, 'index'])->name('admin.Role.index');
     Route::get('/admin/role/create', [RoleController::class, 'create'])->name('admin.Role.create');
     Route::post('/admin/role/store', [RoleController::class, 'store'])->name('admin.Role.store');
+    Route::get('/admin/role/{id}/edit', [RoleController::class, 'edit'])->name('admin.Role.edit');
+    Route::put('/admin/role/{id}/update', [RoleController::class, 'update'])->name('admin.Role.update');
+    Route::delete('/admin/role/{id}/destroy', [RoleController::class, 'destroy'])->name('admin.Role.destroy');
+
     Route::get('/admin/user', [UserController::class, 'index'])->name('admin.User.index');
     Route::get('/admin/user/create', [UserController::class, 'create'])->name('admin.User.create');
     Route::post('/admin/user/store', [UserController::class, 'store'])->name('admin.User.store');
+    Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
+    Route::put('/admin/user/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
+    Route::delete('/admin/user/{id}/destroy', [UserController::class, 'destroy'])->name('admin.User.destroy');
 });
 
 Route::middleware(['isResepsionis'])->group(function () {

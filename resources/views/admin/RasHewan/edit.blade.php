@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Tambah Ras Hewan</h3>
+                <h3 class="mb-0">Edit Ras Hewan</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('admin.RasHewan.index') }}">Ras Hewan</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
         </div>
@@ -21,27 +21,33 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-primary card-outline mb-4">
+                <div class="card card-warning card-outline mb-4">
                     <div class="card-header">
-                        <div class="card-title">Form Tambah Data</div>
+                        <h5 class="card-title">Form Edit Data</h5>
                     </div>
 
-                    <form action="{{ route('admin.RasHewan.store') }}" method="POST">
+                    <form action="{{ route('admin.RasHewan.update', $ras->idras_hewan) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        
                         <div class="card-body">
-                            
-                            @if (session('error'))
+                            @if($errors->any())
                                 <div class="alert alert-danger alert-dismissible fade show">
-                                    {{ session('error') }}
+                                    <strong>Error!</strong> {{ $errors->first() }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                                 </div>
                             @endif
 
-                            {{-- Nama Ras --}}
+                            {{-- Nama Ras Hewan --}}
                             <div class="mb-3">
-                                <label class="form-label">Nama Ras Hewan <span class="text-danger">*</span></label>
-                                <input type="text" name="nama_ras" class="form-control @error('nama_ras') is-invalid @enderror"
-                                    value="{{ old('nama_ras') }}" placeholder="Masukkan nama ras" required>
+                                <label class="form-label">Nama Ras Hewan</label>
+                                <input 
+                                    type="text" 
+                                    name="nama_ras" 
+                                    class="form-control @error('nama_ras') is-invalid @enderror" 
+                                    value="{{ old('nama_ras', $ras->nama_ras) }}"
+                                    required
+                                >
                                 @error('nama_ras')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -49,11 +55,14 @@
 
                             {{-- Jenis Hewan --}}
                             <div class="mb-3">
-                                <label class="form-label">Jenis Hewan <span class="text-danger">*</span></label>
+                                <label class="form-label">Jenis Hewan</label>
                                 <select name="idjenis_hewan" class="form-control @error('idjenis_hewan') is-invalid @enderror" required>
                                     <option value="">-- Pilih Jenis Hewan --</option>
                                     @foreach ($jenis as $j)
-                                        <option value="{{ $j->idjenis_hewan }}" {{ old('idjenis_hewan') == $j->idjenis_hewan ? 'selected' : '' }}>
+                                        <option 
+                                            value="{{ $j->idjenis_hewan }}"
+                                            {{ (old('idjenis_hewan', $ras->idjenis_hewan) == $j->idjenis_hewan) ? 'selected' : '' }}
+                                        >
                                             {{ $j->nama_jenis_hewan }}
                                         </option>
                                     @endforeach
@@ -70,7 +79,7 @@
                                     <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </div>

@@ -5,13 +5,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <h3 class="mb-0">Tambah Kode Tindakan</h3>
+                <h3 class="mb-0">Edit Kode Tindakan</h3>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
                     <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                     <li class="breadcrumb-item"><a href="{{ route('admin.KodeTindakan.index') }}">Kode Tindakan</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
+                    <li class="breadcrumb-item active">Edit</li>
                 </ol>
             </div>
         </div>
@@ -21,54 +21,61 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card card-primary card-outline mb-4">
+                <div class="card card-warning card-outline mb-4">
                     <div class="card-header">
-                        <div class="card-title">Form Tambah Data</div>
+                        <h5 class="card-title">Form Edit Data</h5>
                     </div>
 
-                    <form action="{{ route('admin.KodeTindakan.store') }}" method="POST">
+                    <form action="{{ route('admin.KodeTindakan.update', $kode->idkode_tindakan_terapi) }}" method="POST">
                         @csrf
+                        @method('PUT')
+                        
                         <div class="card-body">
                             
                             <div class="mb-3">
-                                <label class="form-label">Kode Tindakan <span class="text-danger">*</span></label>
-                                <input type="text" name="kode" class="form-control" value="{{ old('kode') }}" required placeholder="Contoh: KD001">
+                                <label class="form-label">Kode Tindakan</label>
+                                <input type="text" name="kode" class="form-control"
+                                       value="{{ $kode->kode }}" required>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Deskripsi Tindakan <span class="text-danger">*</span></label>
-                                <textarea name="deskripsi_tindakan_terapi" class="form-control" rows="3" required placeholder="Jelaskan tindakan terapi">{{ old('deskripsi_tindakan_terapi') }}</textarea>
+                                <label class="form-label">Deskripsi Tindakan</label>
+                                <textarea name="deskripsi_tindakan_terapi" class="form-control" rows="3" required>{{ $kode->deskripsi_tindakan_terapi }}</textarea>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Kategori <span class="text-danger">*</span></label>
+                                <label class="form-label">Kategori</label>
                                 <select name="idkategori" class="form-control" required>
-                                    <option value="">-- Pilih Kategori --</option>
                                     @foreach($kategori as $k)
-                                        <option value="{{ $k->idkategori }}">{{ $k->nama_kategori }}</option>
+                                        <option value="{{ $k->idkategori }}" 
+                                            {{ $k->idkategori == $kode->idkategori ? 'selected' : '' }}>
+                                            {{ $k->nama_kategori }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Kategori Klinis <span class="text-danger">*</span></label>
+                                <label class="form-label">Kategori Klinis</label>
                                 <select name="idkategori_klinis" class="form-control" required>
-                                    <option value="">-- Pilih Kategori Klinis --</option>
                                     @foreach($kategoriKlinis as $kk)
-                                        <option value="{{ $kk->idkategori_klinis }}">{{ $kk->nama_kategori_klinis }}</option>
+                                        <option value="{{ $kk->idkategori_klinis }}"
+                                            {{ $kk->idkategori_klinis == $kode->idkategori_klinis ? 'selected' : '' }}>
+                                            {{ $kk->nama_kategori_klinis }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
 
                         </div>
-                        
+
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">
                                 <a href="{{ route('admin.KodeTindakan.index') }}" class="btn btn-secondary">
                                     <i class="bi bi-arrow-left"></i> Kembali
                                 </a>
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-save"></i> Simpan
+                                    <i class="bi bi-save"></i> Update
                                 </button>
                             </div>
                         </div>

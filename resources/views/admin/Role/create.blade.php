@@ -1,45 +1,54 @@
-@extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-7">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="mb-0">Tambah Role</h5>
-        </div>
-        <div class="card-body">
-          @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-          @endif
-
-          <form action="{{ route('admin.Role.store') }}" method="POST">
-            @csrf
-            <div class="mb-3">
-              <label for="nama_role" class="form-label">Nama Role <span class="text-danger">*</span></label>
-              <input
-                type="text"
-                id="nama_role"
-                name="nama_role"
-                class="form-control @error('nama_role') is-invalid @enderror"
-                value="{{ old('nama_role') }}"
-                placeholder="misal: Administrator / Dokter / Perawat / Resepsionis / Pemilik"
-                required
-              >
-              @error('nama_role')
-                <div class="invalid-feedback">{{ $message }}</div>
-              @enderror
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Tambah Role</h3>
             </div>
-
-            <div class="d-flex justify-content-between">
-              <a href="{{ route('admin.Role.index') }}" class="btn btn-secondary">Kembali</a>
-              <button type="submit" class="btn btn-primary">Simpan</button>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.Role.index') }}">Role</a></li>
+                    <li class="breadcrumb-item active">Tambah</li>
+                </ol>
             </div>
-          </form>
-
         </div>
-      </div>
     </div>
-  </div>
+</div>
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card card-primary card-outline mb-4">
+                    <div class="card-header">
+                        <div class="card-title">Form Tambah Role</div>
+                    </div>
+
+                    <form action="{{ route('admin.Role.store') }}" method="POST">
+                        @csrf
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nama Role <span class="text-danger">*</span></label>
+                                <input type="text" name="nama_role" class="form-control" required placeholder="Masukkan nama role">
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a href="{{ route('admin.Role.index') }}" class="btn btn-secondary">
+                                    <i class="bi bi-arrow-left"></i> Kembali
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-save"></i> Simpan
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
