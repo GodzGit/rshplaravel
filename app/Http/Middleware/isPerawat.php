@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class isPerawat
+class IsPerawat
 {
     /**
      * Handle an incoming request.
@@ -16,15 +16,12 @@ class isPerawat
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        $role = Auth::user()->activeRole->role->nama_role ?? null;
+
+        if ($role !== 'perawat') {
+            return back()->with('error', 'Akses khusus perawat.');
         }
 
-        $userRole = session('user_role');
-        if ($userRole == 3) {
-            return $next($request);
-        } else {
-            return back()->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
-        }
+        return $next($request);
     }
 }

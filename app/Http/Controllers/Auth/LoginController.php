@@ -56,54 +56,66 @@ class LoginController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return back()->withErrors($validator)->withInput();
         }
 
-        $user = User::with(['roleusers' => function ($query) {
-            $query->where('status', 1)->with('role');
-        }])->where('email', $request->input('email'))->first();
+        // Ambil user + role aktif
+        $user = User::with('activeRole.role')
+            ->where('email', $request->email)
+            ->first();
 
         if (!$user) {
-            return redirect()->back()->withErrors(['email' => 'Email tidak ditemukan.'])->withInput();
+            return back()->withErrors(['email' => 'Email tidak ditemukan.'])->withInput();
         }
 
         if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->withErrors(['password' => 'Password salah.'])->withInput();
+            return back()->withErrors(['password' => 'Password salah.'])->withInput();
         }
 
         Auth::login($user);
 
+        // Simpan info penting
         $request->session()->put([
             'user_id'    => $user->iduser,
             'user_name'  => $user->nama,
             'user_email' => $user->email,
-            'user_role'  => $user->roleusers[0]->idrole ?? 'user',
-            'user_status' => $user->roleusers[0]->status ?? 'active',
         ]);
 
-        // ambil idrole user aktif
-        $userRole = $user->roleusers[0]->idrole ?? null;
+        // Ambil role berdasarkan relasi
+        $role = $user->activeRole->role->nama_role ?? null;
 
-    // arahkan sesuai role
-        switch ($userRole) {
-            case 1:
+        if (!$role) {
+            return redirect()->back()->with('error', 'Role tidak ditemukan atau tidak aktif.');
+        }
+
+        // Arahkan sesuai role
+        switch (strtolower($role)) {
+            case 'administrator':
                 return redirect()->route('admin.dashboard')
-                ->with('success', 'Login berhasil sebagai Administrator!');
-            case 2:
+                    ->with('success', 'Login berhasil sebagai Administrator!');
+
+            case 'dokter':
                 return redirect()->route('dokter.dashboard')
-                ->with('success', 'Login berhasil sebagai Dokter!');
-            case 3:
+                    ->with('success', 'Login berhasil sebagai Dokter!');
+
+            case 'perawat':
                 return redirect()->route('perawat.dashboard')
-                ->with('success', 'Login berhasil sebagai Perawat!');
-            case 4:
+                    ->with('success', 'Login berhasil sebagai Perawat!');
+
+            case 'resepsionis':
                 return redirect()->route('resepsionis.dashboard')
-                ->with('success', 'Login berhasil sebagai Resepsionis!');
+                    ->with('success', 'Login berhasil sebagai Resepsionis!');
+
+            case 'pemilik':
+                return redirect()->route('pemilik.dashboard')
+                    ->with('success', 'Login berhasil sebagai Pemilik!');
+
             default:
-            return redirect('/')->with('success', 'Login berhasil!');
+                return redirect('/')
+                    ->with('success', 'Login berhasil!');
+        }
     }
-    }
+
 
     public function logout(Request $request)
     {

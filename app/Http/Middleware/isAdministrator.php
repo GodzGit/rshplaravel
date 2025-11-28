@@ -7,7 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class isAdministrator
+class IsAdministrator
 {
     /**
      * Handle an incoming request.
@@ -16,15 +16,18 @@ class isAdministrator
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
+        $user = Auth::user();
+
+        if (!$user) {
             return redirect()->route('login');
         }
 
-        $userRole = session('user_role');
-        if ($userRole == 1) {
-            return $next($request);
-        } else {
-            return back()->with('error', 'Anda tidak memiliki akses ke halaman tersebut.');
+        $role = $user->activeRole->role->nama_role ?? null;
+
+        if ($role !== 'administrator') {
+            return back()->with('error', 'Anda tidak memiliki akses.');
         }
+
+        return $next($request);
     }
 }

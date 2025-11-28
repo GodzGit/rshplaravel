@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class isPemilik
+class IsPemilik
 {
     /**
      * Handle an incoming request.
@@ -16,16 +16,12 @@ class isPemilik
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check()) {
-            return redirect()->route('login');
+        $role = Auth::user()->activeRole->role->nama_role ?? null;
+
+        if ($role !== 'pemilik') {
+            return back()->with('error', 'Akses khusus pemilik.');
         }
 
-        // cek apakah user punya data pemilik
-        $user = Auth::user();
-        if ($user->pemilik) {
-            return $next($request);
-        }
-
-        return back()->with('error', 'Anda bukan pemilik terdaftar.');
+        return $next($request);
     }
 }
