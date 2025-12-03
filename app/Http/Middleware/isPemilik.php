@@ -18,7 +18,7 @@ class IsPemilik
     {
         $role = Auth::user()->activeRole->role->nama_role ?? null;
 
-        if ($role !== 'pemilik') {
+        if ($role !== 'Pemilik') {
             return back()->with('error', 'Akses khusus pemilik.');
         }
 

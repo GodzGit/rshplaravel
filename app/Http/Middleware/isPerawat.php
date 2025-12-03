@@ -18,7 +18,7 @@ class IsPerawat
     {
         $role = Auth::user()->activeRole->role->nama_role ?? null;
 
-        if ($role !== 'perawat') {
+        if ($role !== 'Perawat') {
             return back()->with('error', 'Akses khusus perawat.');
         }
 

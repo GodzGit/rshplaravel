@@ -124,8 +124,29 @@ Route::middleware(['isResepsionis'])->group(function () {
     Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index'])
         ->name('resepsionis.dashboard');
 
-    Route::get('/resepsionis/Pendaftaran', [ResepsionisPendaftaranController::class, 'index'])
-        ->name('resepsionis.Pendaftaran.index');
+    // REGISTRASI PEMILIK & PET
+Route::get('/resepsionis/Pendaftaran', 
+    [ResepsionisPendaftaranController::class, 'index'])
+->name('resepsionis.Pendaftaran.index');
+
+/** Pemilik */
+    Route::get('/resepsionis/Pendaftaran/pemilik/tambah',
+        [ResepsionisPendaftaranController::class, 'createPemilik'])
+        ->name('resepsionis.Pendaftaran.createPemilik');
+
+    Route::post('/resepsionis/Pendaftaran/pemilik/store',
+        [ResepsionisPendaftaranController::class, 'storePemilik'])
+        ->name('resepsionis.Pendaftaran.storePemilik');
+
+    /** Pet */
+    Route::get('/resepsionis/Pendaftaran/pet/tambah',
+        [ResepsionisPendaftaranController::class, 'createPet'])
+        ->name('resepsionis.Pendaftaran.createPet');
+
+    Route::post('/resepsionis/Pendaftaran/pet/store',
+        [ResepsionisPendaftaranController::class, 'storePet'])
+        ->name('resepsionis.Pendaftaran.storePet');
+  
 
     Route::get('/resepsionis/temu-dokter', [ResepsionisTemuDokterController::class, 'index'])
         ->name('resepsionis.TemuDokter.index');

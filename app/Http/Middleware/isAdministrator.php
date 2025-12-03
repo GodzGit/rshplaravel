@@ -24,7 +24,7 @@ class IsAdministrator
 
         $role = $user->activeRole->role->nama_role ?? null;
 
-        if ($role !== 'administrator') {
+        if ($role !== 'Administrator') {
             return back()->with('error', 'Anda tidak memiliki akses.');
         }
 

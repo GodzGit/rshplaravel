@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\TemuDokter;
+use App\Models\Pemilik;
 
 
 class ResepsionisTemuDokterController extends Controller
@@ -18,19 +19,27 @@ class ResepsionisTemuDokterController extends Controller
 
     public function create()
     {
-        $pet = Pet::with('pemilik')->get();
-        return view('resepsionis.TemuDokter.create', compact('pet'));
+        $pemilik = Pemilik::with('pets')->get();
+
+        return view('resepsionis.temudokter.create', compact('pemilik'));
     }
 
     public function store(Request $request)
     {
-        TemuDokter::create([
-            'idpet' => $request->idpet,
-            'no_urut' => TemuDokter::max('no_urut') + 1,
-            'status' => '0',
+        $request->validate([
+            'idpemilik' => 'required',
+            'idpet' => 'required',
+            'waktu_daftar' => 'required',
         ]);
 
-        return redirect()->route('resepsionis.temu-dokter')
-            ->with('success', 'Temu Dokter berhasil ditambahkan!');
+        TemuDokter::create([
+            'idpemilik' => $request->idpemilik,
+            'idpet' => $request->idpet,
+            'waktu_daftar' => $request->waktu_daftar,
+            'status' => 'Menunggu',
+        ]);
+
+        return redirect()->route('resepsionis.TemuDokter.index')
+            ->with('success', 'Temu dokter berhasil ditambahkan!');
     }
 }

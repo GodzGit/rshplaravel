@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Pemilik extends Model
 {
     protected $table = 'pemilik';
+    public $timestamps = false;
     protected $primaryKey = 'idpemilik';
     public $fillable = ['no_wa', 'alamat'];
 

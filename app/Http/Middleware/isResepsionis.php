@@ -18,7 +18,7 @@ class IsResepsionis
     {
         $role = Auth::user()->activeRole->role->nama_role ?? null;
 
-        if ($role !== 'resepsionis') {
+        if ($role !== 'Resepsionis') {
             return back()->with('error', 'Akses khusus resepsionis.');
         }
 
