@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\TemuDokter;
 use App\Models\Pemilik;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 
 class ResepsionisTemuDokterController extends Controller
@@ -19,27 +21,31 @@ class ResepsionisTemuDokterController extends Controller
 
     public function create()
     {
-        $pemilik = Pemilik::with('pets')->get();
-
-        return view('resepsionis.temudokter.create', compact('pemilik'));
+        $pet = \App\Models\Pet::all();
+        return view('resepsionis.temuDokter.create', compact('pet'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'idpemilik' => 'required',
-            'idpet' => 'required',
-            'waktu_daftar' => 'required',
+            'idpet' => 'required|integer',
         ]);
 
-        TemuDokter::create([
-            'idpemilik' => $request->idpemilik,
+        $tanggal = date('Y-m-d');
+
+        // Nomor urut harian (reset per hari)
+        $nomor = DB::table('temu_dokter')
+            ->where('waktu_daftar', $tanggal)
+            ->count() + 1;
+
+        DB::table('temu_dokter')->insert([
             'idpet' => $request->idpet,
-            'waktu_daftar' => $request->waktu_daftar,
-            'status' => 'Menunggu',
+            'waktu_daftar' => $tanggal,
+            'no_urut' => $nomor
         ]);
 
         return redirect()->route('resepsionis.TemuDokter.index')
-            ->with('success', 'Temu dokter berhasil ditambahkan!');
+            ->with('success', 'Antrian berhasil ditambahkan!');
     }
+
 }
