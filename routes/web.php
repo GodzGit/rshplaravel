@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DashboardAdminController;
 use App\Http\Controllers\dokter\{DashboardDokterController,
-    RekamMedisDokterController
+    RekamMedisDokterController,
+    TemuDokterController
     };
 use App\Http\Controllers\perawat\{DashboardPerawatController,
     RekamMedisPerawatController
@@ -179,14 +180,18 @@ Route::get('/resepsionis/Pendaftaran',
 
 
 Route::middleware(['isDokter'])->group(function () {
-    Route::get('/dokter/dashboard', [App\Http\Controllers\dokter\DashboardDokterController::class, 'index'])
-        ->name('dokter.dashboard');
+     Route::get('/dokter/dashboard', 
+        [App\Http\Controllers\dokter\DashboardDokterController::class, 'index']
+    )->name('dokter.dashboard');
 
-    Route::get('/dokter/rekam-medis', [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'index'])
-        ->name('dokter.RekamMedis.index');
+    // Rekam medis view only
+    Route::get('/dokter/rekam-medis', 
+        [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'index']
+    )->name('dokter.rekam.index');
 
-    Route::get('/dokter/rekam-medis/{id}', [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'show'])
-        ->name('dokter.RekamMedis.show');
+    Route::get('/dokter/rekam-medis/{id}', 
+        [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'show']
+    )->name('dokter.rekam.show');
 });
 
 Route::middleware(['isPerawat'])->group(function () {

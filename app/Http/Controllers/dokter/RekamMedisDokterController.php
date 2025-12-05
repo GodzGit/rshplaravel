@@ -5,25 +5,30 @@ namespace App\Http\Controllers\dokter;
 use App\Http\Controllers\Controller;
 use App\Models\RekamMedis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class RekamMedisDokterController extends Controller
 {
     public function index()
     {
         $rekam = RekamMedis::with([
-            'temuDokter.pet.pemilik.user',
-        ])->get();
+            'temuDokter.pet.pemilik',
+            'detailRekamMedis.tindakan'
+        ])->orderBy('created_at', 'desc')->get();
 
-        return view('dokter.RekamMedis.index', compact('rekam'));
+        return view('dokter.rekam.index', compact('rekam'));
     }
 
+    // Detail rekam medis
     public function show($id)
     {
-        $rm = RekamMedis::with([
-            'temuDokter.pet.pemilik.user',
-            'detailRekamMedis.kodeTindakan',
+        $rekam = RekamMedis::with([
+            'temuDokter.pet.pemilik',
+            'detailRekamMedis.tindakan'
         ])->findOrFail($id);
 
-        return view('dokter.RekamMedis.show', compact('rm'));
+        return view('dokter.rekam.show', compact('rekam'));
     }
 }

@@ -96,7 +96,7 @@
                     <li class="nav-header">MODUL DOKTER</li>
                     <li class="nav-item">
                         {{-- Pastikan route ini ada di web.php, jika belum ada ganti '#' --}}
-                        <a href="#" class="nav-link"> 
+                        <a href="{{ route('dokter.rekam.index') }}" class="nav-link"> 
                             <i class="nav-icon bi bi-journal-medical"></i>
                             <p>Rekam Medis</p>
                         </a>

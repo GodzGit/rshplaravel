@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class RekamMedis extends Model
 {
     protected $table = 'rekam_medis';
-    public $timestamps = false;
+    public $timestamps = true;
+    const UPDATED_AT = null;
     protected $primaryKey = 'idrekam_medis';
 
     protected $fillable = [
