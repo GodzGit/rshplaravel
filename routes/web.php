@@ -23,7 +23,9 @@ use App\Http\Controllers\Admin\{
     KodeTindakanController,
     PetController,
     RoleController,
-    UserController
+    UserController,
+    PerawatController,
+    DokterController
 };
 // use Illuminate\Support\Facades\DB;
 
@@ -118,6 +120,23 @@ Route::middleware(['isAdministrator'])->group(function () {
     Route::get('/admin/user/{id}/edit', [UserController::class, 'edit'])->name('admin.User.edit');
     Route::put('/admin/user/{id}/update', [UserController::class, 'update'])->name('admin.User.update');
     Route::delete('/admin/user/{id}/destroy', [UserController::class, 'destroy'])->name('admin.User.destroy');
+
+    Route::prefix('admin/perawat')->name('admin.perawat.')->group(function () {
+        Route::get('/', [PerawatController::class, 'index'])->name('index');
+        Route::get('/create', [PerawatController::class, 'create'])->name('create');
+        Route::post('/store', [PerawatController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [PerawatController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [PerawatController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [PerawatController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::get('/admin/dokter', [DokterController::class, 'index'])->name('admin.dokter.index');
+    Route::get('/admin/dokter/create', [DokterController::class, 'create'])->name('admin.dokter.create');
+    Route::post('/admin/dokter/store', [DokterController::class, 'store'])->name('admin.dokter.store');
+    Route::get('/admin/dokter/{id}/edit', [DokterController::class, 'edit'])->name('admin.dokter.edit');
+    Route::put('/admin/dokter/{id}', [DokterController::class, 'update'])->name('admin.dokter.update');
+    Route::delete('/admin/dokter/{id}', [DokterController::class, 'destroy'])->name('admin.dokter.destroy');
+    
 });
 
 Route::middleware(['isResepsionis'])->group(function () {
@@ -177,8 +196,14 @@ Route::middleware(['isPerawat'])->group(function () {
     Route::get('/perawat/rekam-medis', [App\Http\Controllers\perawat\RekamMedisPerawatController::class, 'index'])
         ->name('perawat.RekamMedis.index');
 
-    Route::get('/perawat/rekam-medis/{id}', [App\Http\Controllers\perawat\RekamMedisPerawatController::class, 'show'])
-        ->name('perawat.RekamMedis.show');
+    Route::get('/perawat/rekam-medis', 
+        [RekamMedisPerawatController::class, 'index'])->name('perawat.RekamMedis.index');
+
+    Route::get('/perawat/rekam-medis/create', 
+        [RekamMedisPerawatController::class, 'create'])->name('perawat.RekamMedis.create');
+
+    Route::post('/perawat/rekam-medis/store', 
+        [RekamMedisPerawatController::class, 'store'])->name('perawat.RekamMedis.store');
 });
 
 Route::middleware(['isPemilik'])->group(function () {

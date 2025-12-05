@@ -24,7 +24,7 @@ class TemuDokter extends Model
 
     public function dokter()
     {
-        return $this->belongsTo(User::class, 'iddokter', 'iduser');
+        return $this->belongsTo(User::class, 'iddokter', 'iddokter');
     }
 
 }

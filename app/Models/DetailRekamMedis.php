@@ -4,11 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class DetailRekamMedis extends Model
 {
-    public function kodeTindakan()
-{
-    return $this->belongsTo(KodeTindakan::class, 'idkode_tindakan_terapi', 'idkode_tindakan_terapi');
-}
+    protected $table = 'detail_rekam_medis';
+    public $timestamps = false;
+    protected $primaryKey = 'iddetail_rekam_medis';
 
+    protected $fillable = [
+        'idrekam_medis',
+        'idkode_tindakan_terapi',
+        'detail'
+    ];
+
+    public function tindakan()
+    {
+        return $this->belongsTo(KodeTindakan::class, 'idkode_tindakan_terapi', 'idkode_tindakan_terapi');
+    }
 }

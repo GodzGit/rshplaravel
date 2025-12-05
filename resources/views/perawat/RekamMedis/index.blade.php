@@ -1,44 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekam Medis</title>
-    <link rel="stylesheet" href="{{ asset('assets/style.css') }}">
-</head>
-<body>
-    @extends('layouts.app')
+@extends('layouts.lte.main')
 
 @section('content')
-<div class="container">
-    <h3>Daftar Rekam Medis</h3>
+<div class="app-content-header">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <h3 class="mb-0">Rekam Medis (Perawat)</h3>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-end">
+                    <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Rekam Medis</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
 
-    <table class="table">
-        <tr>
-            <th>No</th>
-            <th>Nama Pet</th>
-            <th>Pemilik</th>
-            <th>Diagnosa</th>
-            <th>Tanggal</th>
-            <th>Aksi</th>
-        </tr>
+                <div class="card card-outline card-primary mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Data Rekam Medis</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('perawat.RekamMedis.create') }}" class="btn btn-primary btn-sm">
+                                <i class="bi bi-plus-lg"></i> Tambah Rekam Medis
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead class="table-light text-center">
+                                    <tr>
+                                        <th style="width: 5%">No</th>
+                                        <th style="width: 15%">Pet / Pasien</th>
+                                        <th style="width: 20%">Anamnesa & Temuan</th>
+                                        <th style="width: 15%">Diagnosa</th>
+                                        <th style="width: 20%">Tindakan</th>
+                                        <th style="width: 25%">Detail Tindakan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($rekam as $r)
+                                    <tr>
+                                        <td class="text-center">{{ $loop->iteration }}.</td>
+                                        <td class="fw-bold">
+                                            {{ $r->temuDokter->pet->nama ?? '-' }}
+                                            <br>
+                                            <small class="text-muted">
+                                                {{ $r->temuDokter->pet->ras->nama_ras ?? '' }}
+                                            </small>
+                                        </td>
+                                        <td>
+                                            <strong>Anamnesa:</strong><br>
+                                            {{ $r->anamnesa }}
+                                            <hr class="my-1">
+                                            <strong>Temuan:</strong><br>
+                                            {{ $r->temuan_klinis }}
+                                        </td>
+                                        <td>{{ $r->diagnosa }}</td>
+                                        <td>
+                                            @if($r->detailRekamMedis->count() > 0)
+                                                <ul class="ps-3 mb-0">
+                                                    @foreach ($r->detailRekamMedis as $d)
+                                                        <li>{{ $d->tindakan->deskripsi_tindakan_terapi }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($r->detailRekamMedis->count() > 0)
+                                                <ul class="ps-3 mb-0">
+                                                    @foreach ($r->detailRekamMedis as $d)
+                                                        <li>{{ $d->detail ?? '-' }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @else
+                                                -
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center p-4">Belum ada data rekam medis.</td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
 
-        @foreach ($rekam as $no => $r)
-        <tr>
-            <td>{{ $no + 1 }}</td>
-            <td>{{ $r->temuDokter->pet->nama }}</td>
-            <td>{{ $r->temuDokter->pet->pemilik->user->nama }}</td>
-            <td>{{ $r->diagnosa }}</td>
-            <td>{{ $r->created_at }}</td>
-            <td>
-                <a href="{{ route('perawat.RekamMedis.show', $r->idrekam_medis) }}">Detail</a>
-            </td>
-        </tr>
-        @endforeach
-    </table>
-    <button class="btn"><a href="{{ route('perawat.dashboard') }}">Kembali</a></button>
+                <div class="mb-3">
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali ke Dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
-
-</body>
-</html>

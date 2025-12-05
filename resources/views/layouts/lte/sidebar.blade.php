@@ -77,6 +77,16 @@
                                     <i class="nav-icon bi bi-circle"></i> <p>Kode Tindakan</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.perawat.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i> <p>Tambah Perawat</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.dokter.index') }}" class="nav-link">
+                                    <i class="nav-icon bi bi-circle"></i> <p>Tambah Dokter</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 @endif
@@ -97,7 +107,7 @@
                 @if ($role === 'Perawat')
                     <li class="nav-header">MODUL PERAWAT</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('perawat.RekamMedis.index') }}" class="nav-link">
                             <i class="nav-icon bi bi-list-task"></i>
                             <p>Rekam Medis</p>
                         </a>

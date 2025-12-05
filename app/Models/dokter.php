@@ -8,11 +8,14 @@ class dokter extends Model
 {
     protected $table = 'dokter';
     protected $primaryKey = 'iddokter';
+    public $timestamps = false;
 
     protected $fillable = [
-        'iduser',
-        'nama_dokter',
-        'no_wa'
+        'alamat',
+        'no_hp',
+        'bidang_dokter',
+        'jenis_kelamin',
+        'iduser'
     ];
 
     public function user()

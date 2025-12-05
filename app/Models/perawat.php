@@ -8,11 +8,14 @@ class perawat extends Model
 {
     protected $table = 'perawat';
     protected $primaryKey = 'idperawat';
+    public $timestamps = false;
 
     protected $fillable = [
-        'iduser',
-        'nama_perawat',
-        'no_wa'
+        'alamat',
+        'no_hp',
+        'jenis_kelamin',
+        'pendidikan',
+        'iduser'
     ];
 
     public function user()
