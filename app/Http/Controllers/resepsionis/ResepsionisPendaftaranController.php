@@ -33,23 +33,36 @@ class ResepsionisPendaftaranController extends Controller
             'no_wa' => 'required',
         ]);
 
-        // 1. buat user baru
-        $user = User::create([
-            'nama' => $request->nama,
-            'email' => $request->email,
+        // 1. CREATE USER
+        $iduser = DB::table('user')->insertGetId([
+            'nama'     => ucwords($request->nama),
+            'email'    => $request->email,
             'password' => bcrypt($request->password),
         ]);
 
-        // 2. buat pemilik
+        // 2. AMBIL ROLE PEMILIK
+        $rolePemilik = DB::table('role')
+            ->whereRaw('LOWER(nama_role) = "pemilik"')
+            ->first();
+
+        // 3. INSERT role_user
+        DB::table('role_user')->insert([
+            'iduser' => $iduser,
+            'idrole' => $rolePemilik->idrole,
+            'status' => 1
+        ]);
+
+        // 4. INSERT pemilik
         DB::table('pemilik')->insert([
-            'iduser' => $user->iduser,
+            'iduser' => $iduser,
             'alamat' => $request->alamat,
-            'no_wa' => $request->no_wa,
+            'no_wa'  => $request->no_wa,
         ]);
 
         return redirect()->route('resepsionis.Pendaftaran.index')
             ->with('success', 'Pemilik berhasil ditambahkan');
     }
+
 
     public function createPet()
     {

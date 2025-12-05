@@ -30,19 +30,22 @@ class UserController extends Controller
     {
         $data = $this->validateUser($request);
 
-        // INSERT user
+        // 1. Insert ke tabel user
         $iduser = DB::table('user')->insertGetId([
             'nama'     => ucwords($data['nama']),
             'email'    => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
-        // INSERT role_user
+        // 2. Insert ke tabel role_user
         DB::table('role_user')->insert([
             'iduser' => $iduser,
             'idrole' => $data['idrole'],
             'status' => 1
         ]);
+
+        // 3. Buat data spesifik sesuai role
+        $this->createRoleData($iduser, $data['idrole']);
 
         return redirect()->route('admin.User.index')->with('success', 'User berhasil ditambahkan!');
     }
@@ -52,7 +55,6 @@ class UserController extends Controller
         $user = DB::table('user')->where('iduser', $id)->first();
         $role = DB::table('role')->get();
 
-        // ambil role aktif user
         $roleUser = DB::table('role_user')
             ->where('iduser', $id)
             ->first();
@@ -64,20 +66,29 @@ class UserController extends Controller
     {
         $data = $this->validateUserUpdate($request, $id);
 
-        // update user
+        // 1. Update data user
         DB::table('user')->where('iduser', $id)->update([
             'nama'  => ucwords($data['nama']),
             'email' => $data['email'],
         ]);
 
-        // update password jika diisi
+        // 2. Update password jika ada
         if (!empty($data['password'])) {
             DB::table('user')->where('iduser', $id)->update([
                 'password' => Hash::make($data['password'])
             ]);
         }
 
-        // update role_user
+        // 3. Cek role lama
+        $oldRole = DB::table('role_user')->where('iduser', $id)->first();
+
+        // 4. Kalau role berubah → hapus data lama → buat data baru
+        if ($oldRole->idrole != $data['idrole']) {
+            $this->deleteRoleData($id, $oldRole->idrole);     // hapus data lama
+            $this->createRoleData($id, $data['idrole']);      // buat data baru
+        }
+
+        // 5. Update tabel role_user
         DB::table('role_user')->where('iduser', $id)->update([
             'idrole' => $data['idrole']
         ]);
@@ -87,12 +98,83 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        // hapus role_user
+        $roleUser = DB::table('role_user')->where('iduser', $id)->first();
+        if ($roleUser) {
+            $this->deleteRoleData($id, $roleUser->idrole);
+        }
+
         DB::table('role_user')->where('iduser', $id)->delete();
         DB::table('user')->where('iduser', $id)->delete();
 
         return redirect()->route('admin.User.index')->with('success', 'User berhasil dihapus!');
     }
 
+
+    /* ============================
+        Helper: Membuat data role
+       ============================ */
+    private function createRoleData($iduser, $idrole)
+    {
+        $role = DB::table('role')->where('idrole', $idrole)->first();
+        $roleName = strtolower($role->nama_role);
+
+        switch ($roleName) {
+            case 'pemilik':
+                DB::table('pemilik')->insert([
+                    'iduser' => $iduser,
+                    'alamat' => '-',
+                    'no_wa'  => '-',
+                ]);
+                break;
+
+            case 'dokter':
+                DB::table('dokter')->insert([
+                    'iduser' => $iduser,
+                    'alamat' => '-',
+                    'no_hp' => '-',
+                    'bidang_dokter' => '-',
+                    'jenis_kelamin' => 'L',
+                ]);
+                break;
+
+            case 'perawat':
+                DB::table('perawat')->insert([
+                    'iduser' => $iduser,
+                    'alamat' => '-',
+                    'no_hp' => '-',
+                    'jenis_kelamin' => 'L',
+                    'pendidikan' => '-',
+                ]);
+                break;
+        }
+    }
+
+    /* ============================
+        Helper: Menghapus data role
+       ============================ */
+    private function deleteRoleData($iduser, $idrole)
+    {
+        $role = DB::table('role')->where('idrole', $idrole)->first();
+        $roleName = strtolower($role->nama_role);
+
+        switch ($roleName) {
+            case 'pemilik':
+                DB::table('pemilik')->where('iduser', $iduser)->delete();
+                break;
+            case 'dokter':
+                DB::table('dokter')->where('iduser', $iduser)->delete();
+                break;
+            case 'perawat':
+                DB::table('perawat')->where('iduser', $iduser)->delete();
+                break;
+        }
+    }
+
+
+    /* ============================
+        Validation
+       ============================ */
     protected function validateUser(Request $request)
     {
         return $request->validate([

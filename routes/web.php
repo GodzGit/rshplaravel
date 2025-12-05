@@ -212,5 +212,30 @@ Route::middleware(['isPerawat'])->group(function () {
 });
 
 Route::middleware(['isPemilik'])->group(function () {
-    Route::get('/pemilik/dashboard', [DashboardPemilikController::class, 'index']) ->name('pemilik.dashboard');
+    Route::get('/pemilik/dashboard',
+        [App\Http\Controllers\pemilik\DashboardPemilikController::class, 'index']
+    )->name('pemilik.dashboard');
+
+    // PET SAYA
+    Route::get('/pemilik/pet',
+        [App\Http\Controllers\pemilik\PemilikPetController::class, 'index']
+    )->name('pemilik.pet.index');
+
+    Route::get('/pemilik/pet/{id}',
+        [App\Http\Controllers\pemilik\PemilikPetController::class, 'show']
+    )->name('pemilik.pet.show');
+
+    // REKAM MEDIS
+    Route::get('/pemilik/rekam-medis',
+        [App\Http\Controllers\pemilik\PemilikRekamMedisController::class, 'index']
+    )->name('pemilik.rekam.index');
+
+    Route::get('/pemilik/rekam-medis/{id}',
+        [App\Http\Controllers\pemilik\PemilikRekamMedisController::class, 'detail']
+    )->name('pemilik.rekam.detail');
+
+    // STATUS TEMU DOKTER
+    Route::get('/pemilik/temu-dokter',
+        [App\Http\Controllers\pemilik\PemilikTemuDokterController::class, 'index']
+    )->name('pemilik.temu.index');
 });
