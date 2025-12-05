@@ -71,11 +71,9 @@
                                         </td>
                                         
                                         <td>
-                                            @if($t->status == 'Menunggu')
+                                            @if ($t->status == 0)
                                                 <span class="badge text-bg-warning">Menunggu</span>
-                                            @elseif($t->status == 'Diperiksa')
-                                                <span class="badge text-bg-primary">Sedang Diperiksa</span>
-                                            @elseif($t->status == 'Selesai')
+                                            @elseif ($t->status == 1)
                                                 <span class="badge text-bg-success">Selesai</span>
                                             @else
                                                 <span class="badge text-bg-secondary">{{ $t->status }}</span>
@@ -83,14 +81,27 @@
                                         </td>
 
                                         <td>
-                                            {{-- Contoh tombol aksi (misal: diproses) --}}
-                                            <a href="#" class="btn btn-success btn-sm" onclick="return confirm('Proses antrian ini?')" title="Proses">
-                                                <i class="bi bi-check-lg"></i>
-                                            </a>
-                                            {{-- Contoh tombol aksi (misal: cancel) --}}
-                                            <a href="#" class="btn btn-danger btn-sm" onclick="return confirm('Batalkan antrian ini?')" title="Batalkan">
-                                                <i class="bi bi-x-lg"></i>
-                                            </a>
+                                            {{-- PROSES (ubah status jadi selesai) --}}
+                                            <form action="{{ route('resepsionis.TemuDokter.done', $t->idreservasi_dokter) }}" 
+                                                method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="btn btn-success btn-sm"
+                                                        onclick="return confirm('Tandai antrian ini sebagai selesai?')">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                            </form>
+
+                                            {{-- BATALKAN --}}
+                                            <form action="{{ route('resepsionis.TemuDokter.delete', $t->idreservasi_dokter) }}" 
+                                                method="POST" style="display:inline-block;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('Batalkan antrian ini?')">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @empty

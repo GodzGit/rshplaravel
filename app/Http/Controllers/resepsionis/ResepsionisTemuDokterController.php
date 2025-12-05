@@ -31,7 +31,7 @@ class ResepsionisTemuDokterController extends Controller
             'idpet' => 'required|integer',
         ]);
 
-        $tanggal = date('Y-m-d');
+        $tanggal = date('Y-m-d H:i:s');
 
         // Nomor urut harian (reset per hari)
         $nomor = DB::table('temu_dokter')
@@ -46,6 +46,24 @@ class ResepsionisTemuDokterController extends Controller
 
         return redirect()->route('resepsionis.TemuDokter.index')
             ->with('success', 'Antrian berhasil ditambahkan!');
+    }
+
+    public function markDone($id)
+    {
+        DB::table('reservasi_dokter')
+            ->where('idreservasi_dokter', $id)
+            ->update(['status' => 1]);
+
+        return back()->with('success', 'Antrian telah ditandai Selesai.');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('reservasi_dokter')
+            ->where('idreservasi_dokter', $id)
+            ->delete();
+
+        return back()->with('success', 'Antrian berhasil dibatalkan.');
     }
 
 }

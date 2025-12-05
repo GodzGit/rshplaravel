@@ -176,7 +176,13 @@ Route::get('/resepsionis/Pendaftaran',
 
     Route::post('/resepsionis/temu-dokter/store', [ResepsionisTemuDokterController::class, 'store'])
         ->name('resepsionis.TemuDokter.store');
+    Route::patch('/resepsionis/temudokter/{id}/done', [ResepsionisTemuDokterController::class, 'markDone'])
+        ->name('resepsionis.TemuDokter.done');
+
+    Route::delete('/resepsionis/temudokter/{id}/delete', [ResepsionisTemuDokterController::class, 'destroy'])
+        ->name('resepsionis.TemuDokter.delete');
 });
+
 
 
 Route::middleware(['isDokter'])->group(function () {
@@ -193,6 +199,8 @@ Route::middleware(['isDokter'])->group(function () {
         [App\Http\Controllers\dokter\RekamMedisDokterController::class, 'show']
     )->name('dokter.rekam.show');
 });
+
+
 
 Route::middleware(['isPerawat'])->group(function () {
     Route::get('/perawat/dashboard', [App\Http\Controllers\perawat\DashboardPerawatController::class, 'index'])
