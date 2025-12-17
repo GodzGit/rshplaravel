@@ -135,9 +135,21 @@
                 @if ($role === 'Pemilik')
                     <li class="nav-header">AREA PEMILIK</li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{ route('pemilik.rekam.index') }}" class="nav-link">
                             <i class="nav-icon bi bi-heart"></i>
                             <p>Riwayat Medis Pet</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pemilik.pet.index') }}" class="nav-link">
+                            <i class="nav-icon bi bi-heart"></i>
+                            <p>Daftar pet</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('pemilik.temu.index') }}" class="nav-link">
+                            <i class="nav-icon bi bi-heart"></i>
+                            <p>Temu Dokter</p>
                         </a>
                     </li>
                 @endif
