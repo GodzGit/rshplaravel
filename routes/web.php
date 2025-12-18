@@ -149,7 +149,7 @@ Route::get('/resepsionis/Pendaftaran',
     [ResepsionisPendaftaranController::class, 'index'])
 ->name('resepsionis.Pendaftaran.index');
 
-/** Pemilik */
+/** Resepsionis */
     Route::get('/resepsionis/Pendaftaran/pemilik/tambah',
         [ResepsionisPendaftaranController::class, 'createPemilik'])
         ->name('resepsionis.Pendaftaran.createPemilik');
@@ -157,6 +157,14 @@ Route::get('/resepsionis/Pendaftaran',
     Route::post('/resepsionis/Pendaftaran/pemilik/store',
         [ResepsionisPendaftaranController::class, 'storePemilik'])
         ->name('resepsionis.Pendaftaran.storePemilik');
+        Route::get('/{id}/edit', [ResepsionisPendaftaranController::class, 'editPemilik'])
+        ->name('resepsionis.Pendaftaran.edit');
+
+    Route::put('/{id}', [ResepsionisPendaftaranController::class, 'updatePemilik'])
+        ->name('resepsionis.Pendaftaran.update');
+
+    Route::delete('/{id}', [ResepsionisPendaftaranController::class, 'destroyPemilik'])
+        ->name('resepsionis.Pendaftaran.destroy');
 
     /** Pet */
     Route::get('/resepsionis/Pendaftaran/pet/tambah',

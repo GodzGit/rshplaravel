@@ -9,6 +9,7 @@ use App\Models\TemuDokter;
 use App\Models\Pemilik;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 
 class ResepsionisTemuDokterController extends Controller
@@ -28,29 +29,36 @@ class ResepsionisTemuDokterController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'idpet' => 'required|integer',
+            'idpet' => 'required|exists:pet,idpet',
         ]);
 
-        $tanggal = date('Y-m-d H:i:s');
+        // tanggal hari ini
+        $today = Carbon::today();
 
-        // Nomor urut harian (reset per hari)
-        $nomor = DB::table('temu_dokter')
-            ->where('waktu_daftar', $tanggal)
-            ->count() + 1;
+        // ambil no urut terakhir hari ini
+        $lastNoUrut = DB::table('temu_dokter')
+            ->whereDate('waktu_daftar', $today)
+            ->max('no_urut');
 
+        // tentukan no urut baru
+        $noUrutBaru = $lastNoUrut ? $lastNoUrut + 1 : 1;
+
+        // insert antrian
         DB::table('temu_dokter')->insert([
-            'idpet' => $request->idpet,
-            'waktu_daftar' => $tanggal,
-            'no_urut' => $nomor
+            'no_urut'       => $noUrutBaru,
+            'idpet'         => $request->idpet,
+            'status'        => 0, // menunggu
+            'waktu_daftar'  => Carbon::now(),
         ]);
 
-        return redirect()->route('resepsionis.TemuDokter.index')
-            ->with('success', 'Antrian berhasil ditambahkan!');
+        return redirect()
+            ->route('resepsionis.TemuDokter.index')
+            ->with('success', 'Antrian berhasil ditambahkan');
     }
 
     public function markDone($id)
     {
-        DB::table('reservasi_dokter')
+        DB::table('temu_dokter')
             ->where('idreservasi_dokter', $id)
             ->update(['status' => 1]);
 
@@ -59,7 +67,7 @@ class ResepsionisTemuDokterController extends Controller
 
     public function destroy($id)
     {
-        DB::table('reservasi_dokter')
+        DB::table('temu_dokter')
             ->where('idreservasi_dokter', $id)
             ->delete();
 

@@ -75,7 +75,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-warning btn-sm" title="Edit">
+                                                <a href="{{ route('resepsionis.Pendaftaran.edit', $p->idpemilik) }}" class="btn btn-warning btn-sm" title="Edit">
                                                     <i class="bi bi-pencil"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-danger btn-sm" title="Hapus" onclick="return confirm('Hapus data ini?')">

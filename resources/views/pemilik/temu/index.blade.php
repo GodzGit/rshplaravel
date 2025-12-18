@@ -43,9 +43,7 @@
                                 @if($t->status == 0)
                                     <span class="badge text-bg-secondary">Menunggu</span>
                                 @elseif($t->status == 1)
-                                    <span class="badge text-bg-warning spinner-grow-sm">Sedang Diperiksa...</span>
-                                @elseif($t->status == 2)
-                                    <span class="badge text-bg-success">Selesai</span>
+                                    <span class="badge text-bg-success spinner-grow-sm">Selesai</span>
                                 @endif
                             </td>
                         </tr>

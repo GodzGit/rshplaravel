@@ -63,6 +63,55 @@ class ResepsionisPendaftaranController extends Controller
             ->with('success', 'Pemilik berhasil ditambahkan');
     }
 
+    public function editPemilik($id)
+    {
+        $pemilik = Pemilik::with('user')->findOrFail($id);
+        return view('resepsionis.pendaftaran.edit-pemilik', compact('pemilik'));
+    }
+
+    public function updatePemilik(Request $request, $id)
+    {
+        $pemilik = Pemilik::with('user')->findOrFail($id);
+
+        $request->validate([
+            'nama'   => 'required|string',
+            'email'  => 'required|email|unique:user,email,' . $pemilik->user->iduser . ',iduser',
+            'alamat' => 'required',
+            'no_wa'  => 'required',
+        ]);
+
+        // update user
+        DB::table('user')->where('iduser', $pemilik->iduser)->update([
+            'nama'  => $request->nama,
+            'email' => $request->email,
+        ]);
+
+        // update pemilik
+        DB::table('pemilik')->where('idpemilik', $id)->update([
+            'alamat' => $request->alamat,
+            'no_wa'  => $request->no_wa,
+        ]);
+
+        return redirect()->route('resepsionis.Pendaftaran.index')
+            ->with('success', 'Data pemilik berhasil diperbarui');
+    }
+
+    public function destroyPemilik($id)
+    {
+        $pemilik = Pemilik::findOrFail($id);
+
+        // hapus role_user
+        DB::table('role_user')->where('iduser', $pemilik->iduser)->delete();
+
+        // hapus user
+        DB::table('user')->where('iduser', $pemilik->iduser)->delete();
+
+        // hapus pemilik
+        DB::table('pemilik')->where('idpemilik', $id)->delete();
+
+        return back()->with('success', 'Pemilik berhasil dihapus');
+    }
+
 
     public function createPet()
     {
