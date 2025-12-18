@@ -24,7 +24,6 @@
                 </li>
 
                 {{-- MENU ADMINISTRATOR --}}
-                {{-- Pastikan nama di database 'Admin' atau 'Administrator', sesuaikan string di bawah --}}
                 @if ($role === 'Admin' || $role === 'Administrator')
                     <li class="nav-header">ADMINISTRATOR</li>
                     
@@ -32,7 +31,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon bi bi-box-seam-fill"></i>
                             <p>
-                                Master Data
+                                Fungsi Admin
                                 <i class="nav-arrow bi bi-chevron-right"></i>
                             </p>
                         </a>
@@ -79,12 +78,12 @@
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.perawat.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i> <p>Tambah Perawat</p>
+                                    <i class="nav-icon bi bi-circle"></i> <p>Perawat</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.dokter.index') }}" class="nav-link">
-                                    <i class="nav-icon bi bi-circle"></i> <p>Tambah Dokter</p>
+                                    <i class="nav-icon bi bi-circle"></i> <p>Dokter</p>
                                 </a>
                             </li>
                         </ul>

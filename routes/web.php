@@ -145,9 +145,9 @@ Route::middleware(['isResepsionis'])->group(function () {
         ->name('resepsionis.dashboard');
 
     // REGISTRASI PEMILIK & PET
-Route::get('/resepsionis/Pendaftaran', 
-    [ResepsionisPendaftaranController::class, 'index'])
-->name('resepsionis.Pendaftaran.index');
+    Route::get('/resepsionis/Pendaftaran', 
+        [ResepsionisPendaftaranController::class, 'index'])
+    ->name('resepsionis.Pendaftaran.index');
 
 /** Resepsionis */
     Route::get('/resepsionis/Pendaftaran/pemilik/tambah',
